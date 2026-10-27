@@ -17,6 +17,7 @@
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
   form { display: grid; gap: 10px; }
   label { font-weight: 600; font-size: 13px; }
+  label.inline input { width: auto; margin: 0; }
   label.inline { display: flex; align-items: center; gap: 6px; font-weight: 400; margin: 8px 0; }
   input, textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; font: inherit; }
   textarea { min-height: 64px; resize: vertical; }
@@ -111,6 +112,9 @@ function describe(e) {
       : `<b>rejected</b> the draft. ${esc(e.comment)}` +
         (e.unsupported_claims.length ? `<br>Unsupported: ${e.unsupported_claims.map((c) => esc(c.claim)).join("; ")}` : "") +
         (e.missing_dimensions.length ? `<br>Missing: ${e.missing_dimensions.map(esc).join(", ")}` : "");
+    case "coverage_check": return e.uncovered.length
+      ? `coverage check: <b>no cited evidence for ${e.uncovered.map(esc).join(", ")}</b>`
+      : `coverage check: every risk dimension has cited evidence`;
     case "send_back": return `sent the work back: ${(e.feedback.follow_up || []).map(esc).join("; ")}`;
     case "hydrate": return `loaded <b>${e.long_term_memories}</b> long-term memories from previous runs`;
     case "retrieve": return `injected ${e.count} memories` + (e.from_previous_runs ? ` (<b>${e.from_previous_runs} from earlier runs</b>)` : "");
