@@ -1,0 +1,43 @@
+{
+  "project": "Due-Diligence Agent That Can Explain Why",
+  "track": "Track 02: The Agent That Can Explain Why",
+  "use_case": "Company due diligence before a supply contract, loan or investment",
+  "repository": "https://github.com/AIVIETNAM-AIO-felixdoit/open-agent-hackathon-2026",
+  "run": {
+    "cli": "python run.py --input input_examples/example_1.json",
+    "cli_sample_mode": "python run.py --input input_examples/example_1.json --sample",
+    "api": "POST /run  {\"company\": \"Rivian\", \"question\": \"...\", \"sample\": false}",
+    "ui": "python -m uvicorn main:app  ->  http://localhost:8000"
+  },
+  "agents": [
+    {"name": "Planner", "role": "hypotheses and search plan; re-plans from Critic feedback"},
+    {"name": "Retriever", "role": "Zetaris USL queries and web search"},
+    {"name": "Analyst", "role": "quoted evidence extraction and cited decision memo"},
+    {"name": "Critic", "role": "audits claims and coverage; rejects and sends work back to Planner"}
+  ],
+  "meterless": {
+    "engines": [
+      {
+        "engine": "H-MEM",
+        "services": ["MemoryStoreService", "MemoryRetrievalService", "TrustLedgerService"],
+        "where": "hmem.py; used in agent.py (planner, analyst_draft, run_investigation)",
+        "evidence": ["memory/long_term.jsonl", "logs/hmem_ledger_<run_id>.jsonl", "logs/hmem_retrieval_<run_id>.jsonl", "trace events agent=H-MEM"]
+      }
+    ],
+    "injected_generator": "agent.ask_json: the single function every agent uses for model calls, configured by LLM_BASE_URL / LLM_MODEL",
+    "sample_mode": "samples/*.jsonl replayed when no LLM_API_KEY is set, or with --sample / SAMPLE_MODE=1 / UI checkbox"
+  },
+  "zetaris": {
+    "version": "2.4.3.1 local platform",
+    "sources": ["SEC_DATA (SEC EDGAR XBRL companyconcept)", "SEC_PROFILES (SEC EDGAR submissions)", "COMPANY_DNS (SIC hierarchy)"],
+    "usl": "lightning.metastore.dd.dd_usl (sic_code, company, financial_fact)",
+    "dq_rule": "valid_reported_fact on financial_fact",
+    "where": "zetaris_setup.py, zetaris_client.py, zetaris_queries.py, agent.py (zetaris_query, zetaris_financials)",
+    "evidence": ["zetaris_sql/results.md", "trace events tool_call tool=zetaris"]
+  },
+  "model": {
+    "name": "nvidia/nemotron-3-ultra-550b-a55b",
+    "provider": "NVIDIA Nemotron via OpenAI-compatible gateway (OpenRouter)"
+  },
+  "web_search": "Tavily"
+}

@@ -17,6 +17,7 @@
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
   form { display: grid; gap: 10px; }
   label { font-weight: 600; font-size: 13px; }
+  label.inline { display: flex; align-items: center; gap: 6px; font-weight: 400; margin: 8px 0; }
   input, textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; font: inherit; }
   textarea { min-height: 64px; resize: vertical; }
   button { justify-self: start; background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 10px 20px; font: inherit; font-weight: 600; cursor: pointer; }
@@ -25,6 +26,7 @@
   #log { list-style: none; padding: 0; margin: 0; font-size: 13px; max-height: 360px; overflow-y: auto; }
   #log li { padding: 5px 0; border-bottom: 1px dashed var(--line); }
   #log li.err { color: var(--bad); font-weight: 600; }
+  #log pre.sql { margin: 4px 0 0; padding: 6px 8px; background: var(--chip); border-radius: 4px; font-size: 11px; white-space: pre-wrap; max-height: 120px; overflow-y: auto; }
   #log .t { color: var(--muted); font-family: ui-monospace, Consolas, monospace; margin-right: 6px; }
   .who { display: inline-block; min-width: 78px; font-weight: 700; }
   .who-Planner { color: #2a6db0; } .who-Retriever { color: #7b4bb7; } .who-Analyst { color: #b7791f; }
@@ -55,7 +57,7 @@
 <body>
 <main>
   <h1>Due Diligence Agent</h1>
-  <p class="sub">Ask about any company. The agent researches the web, extracts evidence, and explains <b>why</b> it recommends what it does. Every claim links to its source. Powered by NVIDIA Nemotron.</p>
+  <p class="sub">Ask about any company. The agent researches the web and SEC filings, extracts evidence, and explains <b>why</b> it recommends what it does. Every claim links to its source. Four agents (Planner, Retriever, Analyst, Critic) share Meterless H-MEM memory; audited SEC financials come from a Zetaris semantic layer; reasoning by NVIDIA Nemotron.</p>
 
   <div class="card">
     <form id="f">
@@ -63,6 +65,7 @@
       <input id="company" placeholder="e.g. Rivian, VinFast, Stripe" required>
       <label for="question">Question (optional)</label>
       <textarea id="question" placeholder="Should we invest in or partner with this company? What are the key risks?"></textarea>
+      <label class="inline"><input type="checkbox" id="sample"> Sample mode (replay a recorded run, no API calls)</label>
       <button id="go">Investigate</button>
     </form>
   </div>
@@ -96,7 +99,10 @@ function describe(e) {
     case "question": return `asks: <b>${esc(e.question)}</b>`;
     case "round": return `<b>Round ${e.round}</b>`;
     case "plan": return `planned ${e.queries.length} searches to test: ${e.hypotheses.map((h) => `<b>${esc(h)}</b>`).join("; ")}`;
-    case "tool_call": return `${esc(e.tool)}("${esc(e.query)}") → ${e.hits} results`;
+    case "tool_call": return e.tool === "zetaris"
+      ? `<b>Zetaris</b> ${esc(e.purpose)} → ${e.rows} rows in ${e.seconds}s<pre class="sql">${esc(e.sql)}</pre>`
+      : `${esc(e.tool)}("${esc(e.query)}") → ${e.hits} results`;
+    case "data_quality": return `<b>Zetaris DQ</b> ${e.rules.map((r) => `${esc(r.name)}: ${r.valid_record}/${r.total_record} valid`).join(", ")}`;
     case "sources": return `handed over <b>${e.count}</b> new sources`;
     case "evidence": return `extracted <b>${e.count}</b> pieces of evidence (${modelCalls} model calls so far)`;
     case "draft": return `drafted memo: <b>${esc(e.verdict)}</b>, confidence ${esc(e.confidence)}%`;
@@ -167,7 +173,7 @@ $("f").addEventListener("submit", async (ev) => {
     const resp = await fetch("/api/investigate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ company: $("company").value, question: $("question").value }),
+      body: JSON.stringify({ company: $("company").value, question: $("question").value, sample: $("sample").checked }),
     });
     const reader = resp.body.getReader();
     const decoder = new TextDecoder();

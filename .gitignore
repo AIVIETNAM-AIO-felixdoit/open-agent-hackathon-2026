@@ -3,3 +3,7 @@
 .venv/
 __pycache__/
 *.pyc
+zetaris-platform.zip
+zetaris-platform/
+logs/
+memory/
