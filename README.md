@@ -1,12 +1,36 @@
-# Due-Diligence Agent That Can Explain Why
+# Because: the due-diligence agent that can explain why
 
-**Open Agent Hackathon 2026, Track 02: The Agent That Can Explain Why.**
+**Open Agent Hackathon 2026, Track 02: The Agent That Can Explain Why. Team Because.AI.**
+
+[Pitch deck](https://docs.google.com/presentation/d/1bBBqqKW8Pyl7h2QZr2PVqt9UCu5oShLLEDbtAvs3b48)
 
 Before a supplier signs a multi-year contract, or a fund invests, someone has to answer: *is this company safe to depend on, and why?* Today an analyst spends days reading filings, news and court records, then writes a memo a risk committee can challenge line by line.
 
-This project is a team of four agents that does the first pass in minutes, and **every sentence in its memo cites the evidence behind it**: an SEC 10-K figure from a Zetaris semantic layer, or a quoted line from a web page. A Critic agent audits the draft and sends it back when a claim is unsupported or a risk area has no evidence. What the team learns is kept in Meterless H-MEM memory, so the next investigation of the same company starts from it.
+**Because** is a team of four agents that does the first pass in minutes, and **every sentence in its memo cites the evidence behind it**: an SEC 10-K figure from a Zetaris semantic layer, or a quoted line from a web page. A Critic agent audits the draft and sends it back when a claim is unsupported or a risk area has no evidence. What the team learns is kept in Meterless H-MEM memory, so the next investigation of the same company starts from it.
 
 **Users:** procurement and supplier-risk teams, credit analysts, M&A and VC associates.
+
+## Screenshots
+
+The verdict, with the confidence and why it is not higher:
+
+![Verdict and confidence](docs/images/verdict.png)
+
+The Retriever queries the Zetaris semantic layer; the SQL, row counts and data-quality result are in the trace:
+
+![Zetaris queries in the agent trace](docs/images/trace-zetaris.png)
+
+The Critic rejects a draft and sends it back to the Planner:
+
+![Critic rejecting the draft](docs/images/trace-critic.png)
+
+Reasons and risks, each citing evidence ids:
+
+![Reasons and risks](docs/images/reasons-risks.png)
+
+The evidence chain: every claim with its exact quote and source link (E1–E3 come from SEC filings through Zetaris):
+
+![Evidence chain](docs/images/evidence.png)
 
 ## What a run looks like
 
