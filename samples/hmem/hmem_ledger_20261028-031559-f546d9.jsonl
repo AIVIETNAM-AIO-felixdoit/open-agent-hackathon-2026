@@ -1,0 +1,61 @@
+{"ts": "2026-10-28T03:15:59", "runId": "20261028-031559-f546d9", "action": "hydrate", "actor": "MemoryStoreService", "memoryId": "", "count": 31}
+{"ts": "2026-10-28T03:15:59", "runId": "20261028-031559-f546d9", "action": "read", "actor": "Planner", "memoryId": "", "count": 5}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "reinforce", "actor": "Analyst", "memoryId": "M-8258b333"}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "reinforce", "actor": "Analyst", "memoryId": "M-628364d9"}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "reinforce", "actor": "Analyst", "memoryId": "M-f7206b08"}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-2962683b", "layer": "short_term", "type": "factual", "content": "Rivian's founder and CEO RJ Scaringe maintains control through 100% ownership of Class B super-voting shares despite holding only 1.4% of total equity."}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-082a1dbe", "layer": "short_term", "type": "factual", "content": "Rivian appointed former Volvo executive Javier Varela as COO to streamline manufacturing operations."}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-25214920", "layer": "short_term", "type": "factual", "content": "Rivian's CFO of nearly six years, Claire McDonough, departed for GE Vernova in August 2026, with an interim CFO named."}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-bfbaf705", "layer": "short_term", "type": "factual", "content": "Rivian delivered 19,248 vehicles in Q3 2026, a 46% increase year-over-year, exceeding analyst estimates of 18,001."}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-73419ff4", "layer": "short_term", "type": "factual", "content": "Rivian reaffirmed its 2026 delivery targets as the R2 SUV begins expanding its market reach beyond premium EVs."}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-a4779384", "layer": "short_term", "type": "factual", "content": "Rivian R2 Performance model has 320-mile EPA range, 263-mile real-world range at 70mph, and 230kW max DC charging."}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-254ad985", "layer": "short_term", "type": "factual", "content": "Volkswagen Group and Rivian's joint venture shows strong progress one year after founding, with the deal value now up to $5.8B."}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-3911319b", "layer": "short_term", "type": "factual", "content": "NHTSA is investigating nearly 115,000 Rivian R1S and R1T vehicles over rear suspension failures and toe link assembly defects."}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-34bcb73c", "layer": "short_term", "type": "factual", "content": "NHTSA reopened investigation into Rivian toe link issues, probing 115,000 R1S and R1T vehicles for potential safety defects."}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-c0d29d93", "layer": "short_term", "type": "factual", "content": "Rivian updated its General Terms and Conditions of Production Purchase effective January 1, 2026, which govern component parts purchases."}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-088dd6ef", "layer": "short_term", "type": "factual", "content": "Rivian's production purchase terms state acceptance is expressly limited to their terms, and they reject any seller-proposed modifications unless agreed in writing."}
+{"ts": "2026-10-28T03:17:02", "runId": "20261028-031559-f546d9", "action": "read", "actor": "Analyst", "memoryId": "", "count": 5}
+{"ts": "2026-10-28T03:17:52", "runId": "20261028-031559-f546d9", "action": "reinforce", "actor": "Critic", "memoryId": "M-298d19d9"}
+{"ts": "2026-10-28T03:17:52", "runId": "20261028-031559-f546d9", "action": "read", "actor": "Planner", "memoryId": "", "count": 5}
+{"ts": "2026-10-28T03:18:18", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-f28cc47c", "layer": "short_term", "type": "factual", "content": "Rivian had a recall for improperly tightened high-voltage fasteners that may cause loss of drive power."}
+{"ts": "2026-10-28T03:18:18", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-dd576e47", "layer": "short_term", "type": "factual", "content": "Rivian formed a joint venture partnership with Volkswagen Group in 2024."}
+{"ts": "2026-10-28T03:18:18", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-97685169", "layer": "short_term", "type": "factual", "content": "Rivian has a section for commercial lawsuits in its Wikipedia entry indicating ongoing legal matters."}
+{"ts": "2026-10-28T03:18:18", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-26cea554", "layer": "short_term", "type": "factual", "content": "Rivian is receiving $827M in state funding to expand its Normal, IL manufacturing facility."}
+{"ts": "2026-10-28T03:18:18", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-ff959d2c", "layer": "short_term", "type": "factual", "content": "Rivian has begun R2 public customer deliveries and opened orders for reservation holders."}
+{"ts": "2026-10-28T03:18:18", "runId": "20261028-031559-f546d9", "action": "read", "actor": "Analyst", "memoryId": "", "count": 5}
+{"ts": "2026-10-28T03:19:11", "runId": "20261028-031559-f546d9", "action": "reinforce", "actor": "Critic", "memoryId": "M-298d19d9"}
+{"ts": "2026-10-28T03:19:11", "runId": "20261028-031559-f546d9", "action": "read", "actor": "Analyst", "memoryId": "", "count": 5}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-f28cc47c", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-f28cc47c"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-73419ff4", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-73419ff4"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-628364d9", "verdict": "helpful", "confidence": 0.95}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-c0d29d93", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-c0d29d93"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-2962683b", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-2962683b"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-254ad985", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-254ad985"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-25214920", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-25214920"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-082a1dbe", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-082a1dbe"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-088dd6ef", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-088dd6ef"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-ff959d2c", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-ff959d2c"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-3911319b", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-3911319b"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-34bcb73c", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-34bcb73c"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-8258b333", "verdict": "helpful", "confidence": 0.95}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-a4779384", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-a4779384"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-26cea554", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-26cea554"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-f7206b08", "verdict": "helpful", "confidence": 0.95}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-97685169", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-97685169"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "feedback", "actor": "Critic", "memoryId": "M-bfbaf705", "verdict": "helpful", "confidence": 0.8}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "promote", "actor": "Orchestrator", "memoryId": "M-bfbaf705"}
+{"ts": "2026-10-28T03:19:49", "runId": "20261028-031559-f546d9", "action": "create", "actor": "Analyst", "memoryId": "M-6a12cb11", "layer": "long_term", "type": "factual", "content": "Rivian (2026-10-28): verdict Proceed with caution at 65% confidence. Rivian shows improving financial trajectory with 22% revenue growth (E3) and narrowing operating cash burn from -$4.87B to -$779M ("}

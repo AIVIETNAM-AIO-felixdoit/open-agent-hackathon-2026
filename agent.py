@@ -41,6 +41,14 @@ PAGE_CHARS = 5000
 SOURCE_CHARS = 1800  # per source when all sources share one extraction call
 DIMENSIONS = ["Financial health", "Leadership & governance", "Legal & regulatory",
               "Market & competition", "Reputation & news", "Product & technology"]
+DIMENSION_QUERIES = {  # fallback search per dimension when the Critic flags it as unevidenced
+    "Financial health": "latest quarterly results cash liquidity",
+    "Leadership & governance": "CEO executive leadership changes board",
+    "Legal & regulatory": "lawsuit investigation regulator recall",
+    "Market & competition": "market share competitors EV sales ranking",
+    "Reputation & news": "customer satisfaction brand reputation news",
+    "Product & technology": "product roadmap technology production",
+}
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36"}
 
 
@@ -191,7 +199,8 @@ async def read_page(http: httpx.AsyncClient, url: str) -> str:
 
 PLANNER_PROMPT = f"""You are the Planner in a due-diligence team. Turn the question into hypotheses to test and
 web-search queries that would confirm or refute them. Cover these dimensions: {", ".join(DIMENSIONS)}.
-If the Critic sent feedback, plan ONLY the follow-up work it asks for.
+If the Critic sent feedback, plan ONLY the follow-up work it asks for, with at least one query for each
+dimension listed in missing_dimensions.
 Return {{"hypotheses": ["..."], "queries": [{{"dimension": "...", "query": "...", "why": "which hypothesis it tests"}}]}}
 with at most 6 queries, each including the company name. Audited SEC 10-K financials (revenue, net income, cash,
 operating cash flow, long-term debt vs peers) are pulled from Zetaris automatically, so use web queries for
@@ -205,6 +214,7 @@ Skip sources that are irrelevant or unreadable. Never invent facts."""
 
 ANALYST_PROMPT = """You are the Analyst writing a due-diligence decision memo. Use ONLY the numbered evidence.
 Every reason, risk and contradiction must cite evidence ids like "E3". Be explicit about uncertainty.
+Every dimension that has evidence must appear in at least one reason or risk that cites it.
 If the Critic rejected claims, remove or fix them.
 Return JSON:
 {"verdict": "Proceed|Proceed with caution|Do not proceed|Insufficient evidence",
@@ -238,6 +248,12 @@ async def planner(trace, mem, company, task, feedback=None):
                 "\nUse these to avoid repeating searches that failed before and to target known gaps."
     plan = await ask_json(trace, "Planner", PLANNER_PROMPT, user, max_tokens=3000)
     plan["queries"] = plan.get("queries", [])[:6]
+    # Every dimension the Critic found unevidenced gets at least one query, even if the model forgot it.
+    planned = {q.get("dimension") for q in plan["queries"]}
+    for dim in (feedback or {}).get("missing_dimensions", []):
+        if dim in DIMENSION_QUERIES and dim not in planned:
+            plan["queries"].append({"dimension": dim, "query": f"{company} {DIMENSION_QUERIES[dim]}",
+                                    "why": "Critic: no cited evidence for this dimension"})
     trace.log("Planner", "plan", to="Retriever", hypotheses=plan.get("hypotheses", []), queries=plan["queries"])
     return plan
 

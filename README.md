@@ -12,25 +12,24 @@ This project is a team of four agents that does the first pass in minutes, and *
 
 Question: *"Should a mid-size EV parts supplier sign a 3-year supply contract with Rivian? What are the key risks?"*
 
-Recorded second run (`samples/rivian.jsonl`, replay it with `--sample`):
+Recorded run (`samples/rivian.jsonl`, the third investigation of Rivian; replay it with `--sample`):
 
 ```
-H-MEM                hydrate: 12 long-term memories from the first run
-H-MEM -> Planner     5 memories injected, all from the previous run
-Planner -> Retriever hypotheses + 6 web queries (targets the supplier-terms gap the first run left open)
-Retriever            Zetaris: company profiles + SIC industry       2 rows   3.2s
-Retriever            Zetaris: annual 10-K financials vs peers      30 rows   2.5s
-Retriever            Zetaris DQ: valid_reported_fact 515/515, cik 515/515
-Retriever -> Analyst 19 sources (1 Zetaris + 18 web)
-Analyst -> Critic    11 quoted evidence items; draft "Proceed with caution", 70%
-Critic -> Planner    REJECTED: no cited evidence for Leadership & governance, Market & competition,
-                     Reputation & news; one risk ("terms untested in distress") has no supporting evidence
+H-MEM                hydrate: 31 long-term memories from earlier runs; 5 injected into the Planner
+Retriever            Zetaris: company profiles + SIC industry, annual 10-K financials vs peers, DQ 515/515
+Retriever -> Analyst 18 sources (1 Zetaris + 17 web) -> 14 quoted evidence items
+Analyst -> Critic    draft "Proceed with caution", confidence 75%
+Critic -> Planner    REJECTED: unsupported extrapolations (cash runway, VW funding visibility), a claim
+                     its cited source does not support (R2 market reach), no Reputation & news evidence
 Planner -> Retriever round 2: follow-up queries only for what the Critic asked
-Analyst -> Critic    17 evidence items; revised draft
-Critic               still missing Market & competition, Reputation & news -> Analyst drops unsupported
-                     claims and the memo states the gap instead of hiding it
-H-MEM                15 cited evidence items promoted to long-term memory for the next run
+Analyst -> Critic    19 evidence items; revised draft, confidence 70%
+Critic               REJECTED again: unsupported claims on VW JV progress, COO impact, litigation
+Analyst              final memo drops what the Critic could not accept: confidence 65%,
+                     gaps listed explicitly (reputation sentiment, VW tranche schedule, full supplier terms)
+H-MEM                18 cited evidence items promoted to long-term memory for the next run
 ```
+
+Each rejection lowered the confidence instead of hiding the problem: that is the "explain why" behaviour.
 
 The memo then shows verdict, confidence and why, reasons, risks (with severity), contradictions between sources, gaps and next steps, each linked to numbered evidence and its source URL. Example finding from Zetaris: *Rivian's cash fell from $7.86B (FY2023) to $3.58B (FY2025), but operating cash burn narrowed from -$4.87B to -$779M, so cash covers about 4.6 years of 2025 burn; peer Lucid's covers about 0.3 years.*
 
