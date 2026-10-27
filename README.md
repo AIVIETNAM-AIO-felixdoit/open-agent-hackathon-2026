@@ -1,5 +1,13 @@
 # Because: the due-diligence agent that can explain why
 
+![Track 02](https://img.shields.io/badge/OAH2026-Track%2002%3A%20Explain%20Why-14213D)
+![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)
+![Zetaris](https://img.shields.io/badge/Zetaris-USL%20%2B%20DQ-4B5FD6)
+![Meterless](https://img.shields.io/badge/Meterless-H--MEM-B4651A)
+![NVIDIA Nemotron](https://img.shields.io/badge/NVIDIA-Nemotron-76B900?logo=nvidia&logoColor=white)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 **Open Agent Hackathon 2026, Track 02: The Agent That Can Explain Why. Team Because.AI.**
 
 [Pitch deck](https://docs.google.com/presentation/d/1bBBqqKW8Pyl7h2QZr2PVqt9UCu5oShLLEDbtAvs3b48)
@@ -151,3 +159,7 @@ curl -X POST localhost:8000/run -H "Content-Type: application/json" -d @input_ex
 | `run.py`, `input_examples/` | CLI and example inputs |
 | `samples/` | Recorded real runs for sample mode |
 | `metadata.json` | Track, engines and sponsor tech used |
+
+## License
+
+[MIT](LICENSE) © 2026 Team Because.AI. SEC EDGAR data is fetched live from the SEC and is not redistributed by this license.
