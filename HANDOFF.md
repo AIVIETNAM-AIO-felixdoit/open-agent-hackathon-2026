@@ -45,6 +45,7 @@ copy .env.example .env      # rồi điền key (để trống LLM_API_KEY = sam
 .\.venv\Scripts\python -m uvicorn main:app    # mở http://localhost:8000
 ```
 
-## Việc còn lại
-1. Quay video (1–4 phút) theo khung: Problem → Solution → Agents → Live run → Sponsor tech → Output. Tên file `OAH2026-<TeamName>-ExplainWhy-Demo.mp4`. Không để lộ key (`.env`).
-2. Đẩy lên GitHub, nộp trên HackOS trước 06:45.
+## Đã nộp (28/10/2026, trước 06:45)
+- Track 02, team Because.AI. Video `OAH2026-Because.AI-ExplainWhy-Demo.mp4` (3:40, nằm ở thư mục dự án, không có trong git).
+- Pitch deck: https://docs.google.com/presentation/d/1bBBqqKW8Pyl7h2QZr2PVqt9UCu5oShLLEDbtAvs3b48
+- Đã hỏi help desk về việc dùng Nemotron qua OpenRouter (NVIDIA không gửi OTP về số VN).
