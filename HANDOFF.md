@@ -2,6 +2,22 @@
 
 > Đọc file này đầu tiên khi mở dự án trên máy mới (dán vào Claude Code: "đọc HANDOFF.md rồi làm tiếp").
 
+## Link quan trọng
+| Gì | Link |
+|---|---|
+| Trang hackathon (Resources, nộp bài trên HackOS) | https://hackathon.genai.works/event/open-agent-hackathon-2026 |
+| Discord (thông báo, kênh #help desk) | https://discord.gg/tfwSeqVWmR |
+| Repo dự án | https://github.com/AIVIETNAM-AIO-felixdoit/open-agent-hackathon-2026 |
+| NVIDIA model Nemotron + Get API Key | https://build.nvidia.com/nvidia/llama-3_3-nemotron-super-49b-v1_5 |
+| Tavily API key (tìm kiếm web) | https://app.tavily.com |
+| Zetaris: đăng ký | https://cloud.enterprise.zetaris.com/register |
+| Zetaris: tải bản chạy local + lệnh docker login | https://cloud.enterprise.zetaris.com/dashboard/download |
+| Zetaris: hướng dẫn và recipe | https://github.com/zetaris/getting-started |
+| Zetaris: danh sách nguồn REST (SEC EDGAR...) | https://github.com/zetaris/getting-started/blob/main/open_data/rest_apis/rest-api-sources.md |
+| Docker Desktop | https://docs.docker.com/desktop/ |
+| Meterless (engines, prompt mẫu) | https://meterless.ai/engines.html |
+| Meterless GitHub | https://github.com/Meterless/Meterless |
+
 ## Hạn chót
 **27/10/2026 23:45 UTC = 06:45 sáng 28/10 giờ VN.** Đăng ký và nộp bài đóng cùng giờ này. Team đã tạo xong.
 
