@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Due Diligence Agent</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #fff; --text: #1b1f24; --muted: #5d6673; --line: #e2e5ea;
+    --accent: #76b900; --accent-ink: #3d6100; --good: #1f8a4c; --warn: #b7791f; --bad: #c0392b; --chip: #eef2e6;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+  main { max-width: 980px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { margin: 0 0 4px; font-size: 26px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  form { display: grid; gap: 10px; }
+  label { font-weight: 600; font-size: 13px; }
+  input, textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; font: inherit; }
+  textarea { min-height: 64px; resize: vertical; }
+  button { justify-self: start; background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 10px 20px; font: inherit; font-weight: 600; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: wait; }
+  h2 { font-size: 16px; margin: 0 0 12px; }
+  #log { list-style: none; padding: 0; margin: 0; font-size: 13px; max-height: 360px; overflow-y: auto; }
+  #log li { padding: 5px 0; border-bottom: 1px dashed var(--line); }
+  #log li.err { color: var(--bad); font-weight: 600; }
+  #log .t { color: var(--muted); font-family: ui-monospace, Consolas, monospace; margin-right: 6px; }
+  .who { display: inline-block; min-width: 78px; font-weight: 700; }
+  .who-Planner { color: #2a6db0; } .who-Retriever { color: #7b4bb7; } .who-Analyst { color: #b7791f; }
+  .who-Critic { color: var(--bad); } .who-Orchestrator, .who-User { color: var(--muted); }
+  .who-H-MEM { color: #0f8b8d; }
+  .detail { color: var(--muted); }
+  .detail b { color: var(--text); }
+  .verdict { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .badge { font-size: 18px; font-weight: 700; padding: 6px 14px; border-radius: 8px; color: #fff; }
+  .meter { flex: 1; min-width: 180px; }
+  .bar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .bar > div { height: 100%; background: var(--accent); }
+  .small { font-size: 13px; color: var(--muted); }
+  ul.items { padding-left: 18px; margin: 0; }
+  ul.items li { margin-bottom: 8px; }
+  .cite { display: inline-block; background: var(--chip); color: var(--accent-ink); border-radius: 4px; padding: 0 6px; margin-left: 4px; font-size: 12px; font-weight: 600; cursor: pointer; text-decoration: none; }
+  .sev-high { color: var(--bad); font-weight: 700; } .sev-medium { color: var(--warn); font-weight: 700; } .sev-low { color: var(--muted); font-weight: 700; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+  .ev { border-top: 1px solid var(--line); padding: 10px 0; font-size: 14px; }
+  .ev.flash { background: #fffbe6; }
+  .ev q { color: var(--muted); font-style: italic; }
+  .pos { color: var(--good); } .neg { color: var(--bad); } .neu { color: var(--muted); }
+  a { color: #2a6db0; word-break: break-word; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Due Diligence Agent</h1>
+  <p class="sub">Ask about any company. The agent researches the web, extracts evidence, and explains <b>why</b> it recommends what it does. Every claim links to its source. Powered by NVIDIA Nemotron.</p>
+
+  <div class="card">
+    <form id="f">
+      <label for="company">Company</label>
+      <input id="company" placeholder="e.g. Rivian, VinFast, Stripe" required>
+      <label for="question">Question (optional)</label>
+      <textarea id="question" placeholder="Should we invest in or partner with this company? What are the key risks?"></textarea>
+      <button id="go">Investigate</button>
+    </form>
+  </div>
+
+  <div class="card hidden" id="progress">
+    <h2>Agent trace: who did what, and who challenged whom</h2>
+    <ul id="log"></ul>
+  </div>
+
+  <div id="result"></div>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const cites = (ids) => (ids || []).map((id) => `<a class="cite" href="#${esc(id)}" data-ev="${esc(id)}">${esc(id)}</a>`).join("");
+const VERDICT_COLOR = { "Proceed": "var(--good)", "Proceed with caution": "var(--warn)", "Do not proceed": "var(--bad)" };
+
+function log(html, cls = "") {
+  const li = document.createElement("li");
+  li.className = cls;
+  li.innerHTML = html;
+  $("log").appendChild(li);
+  $("log").scrollTop = $("log").scrollHeight;
+}
+
+// One readable line per trace event; model_call events are only counted to keep the log short.
+let modelCalls = 0;
+function describe(e) {
+  switch (e.action) {
+    case "question": return `asks: <b>${esc(e.question)}</b>`;
+    case "round": return `<b>Round ${e.round}</b>`;
+    case "plan": return `planned ${e.queries.length} searches to test: ${e.hypotheses.map((h) => `<b>${esc(h)}</b>`).join("; ")}`;
+    case "tool_call": return `${esc(e.tool)}("${esc(e.query)}") → ${e.hits} results`;
+    case "sources": return `handed over <b>${e.count}</b> new sources`;
+    case "evidence": return `extracted <b>${e.count}</b> pieces of evidence (${modelCalls} model calls so far)`;
+    case "draft": return `drafted memo: <b>${esc(e.verdict)}</b>, confidence ${esc(e.confidence)}%`;
+    case "review": return e.approved
+      ? `<b>approved</b> the draft. ${esc(e.comment)}`
+      : `<b>rejected</b> the draft. ${esc(e.comment)}` +
+        (e.unsupported_claims.length ? `<br>Unsupported: ${e.unsupported_claims.map((c) => esc(c.claim)).join("; ")}` : "") +
+        (e.missing_dimensions.length ? `<br>Missing: ${e.missing_dimensions.map(esc).join(", ")}` : "");
+    case "send_back": return `sent the work back: ${(e.feedback.follow_up || []).map(esc).join("; ")}`;
+    case "hydrate": return `loaded <b>${e.long_term_memories}</b> long-term memories from previous runs`;
+    case "retrieve": return `injected ${e.count} memories` + (e.from_previous_runs ? ` (<b>${e.from_previous_runs} from earlier runs</b>)` : "");
+    case "consolidate": return `promoted ${e.promoted} cited evidence items to long-term memory`;
+    case "done": return `finished: <b>${esc(e.verdict)}</b>`;
+    case "error": return esc(e.message);
+    default: return esc(e.action);
+  }
+}
+
+function render({ memo, evidence, sources, run_id }) {
+  const src = Object.fromEntries(sources.map((s) => [s.id, s]));
+  const color = VERDICT_COLOR[memo.verdict] || "var(--muted)";
+  const list = (arr, fn) => (arr && arr.length ? `<ul class="items">${arr.map(fn).join("")}</ul>` : `<p class="small">None found.</p>`);
+
+  $("result").innerHTML = `
+    <div class="card">
+      <div class="verdict">
+        <span class="badge" style="background:${color}">${esc(memo.verdict)}</span>
+        <div class="meter">
+          <div class="small">Confidence ${esc(memo.confidence)}%</div>
+          <div class="bar"><div style="width:${Number(memo.confidence) || 0}%"></div></div>
+        </div>
+      </div>
+      <p>${esc(memo.summary)}</p>
+      <p class="small"><b>Why this confidence:</b> ${esc(memo.confidence_reason)}</p>
+      <p class="small">Trace file: logs/trace_${esc(run_id)}.jsonl</p>
+    </div>
+    <div class="grid">
+      <div class="card"><h2>Why: key reasons</h2>${list(memo.reasons, (r) => `<li>${esc(r.point)}${cites(r.evidence)}</li>`)}</div>
+      <div class="card"><h2>Risks</h2>${list(memo.risks, (r) => `<li><span class="sev-${esc(r.severity)}">${esc(r.severity).toUpperCase()}</span> ${esc(r.risk)}${cites(r.evidence)}</li>`)}</div>
+      <div class="card"><h2>Where sources disagree</h2>${list(memo.contradictions, (c) => `<li>${esc(c.issue)}${cites(c.evidence)}</li>`)}</div>
+      <div class="card"><h2>Gaps &amp; next steps</h2>${list([...(memo.gaps || []).map((g) => "Gap: " + g), ...(memo.next_steps || []).map((n) => "Next: " + n)], (x) => `<li>${esc(x)}</li>`)}</div>
+    </div>
+    <div class="card">
+      <h2>Evidence chain (${evidence.length})</h2>
+      ${evidence.map((e) => {
+        const s = src[e.source] || {};
+        const sig = e.signal === "positive" ? "pos" : e.signal === "negative" ? "neg" : "neu";
+        return `<div class="ev" id="${esc(e.id)}"><b>${esc(e.id)}</b> <span class="${sig}">●</span> ${esc(e.claim)}
+          ${e.quote ? `<br><q>${esc(e.quote)}</q>` : ""}
+          <br><span class="small">${esc(e.dimension)}${e.date ? " · " + esc(e.date) : ""} · <a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title || s.url)}</a></span></div>`;
+      }).join("")}
+    </div>`;
+
+  document.querySelectorAll(".cite").forEach((a) => a.addEventListener("click", () => {
+    const el = $(a.dataset.ev);
+    if (el) { el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1500); }
+  }));
+}
+
+$("f").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  $("go").disabled = true;
+  $("log").innerHTML = ""; $("result").innerHTML = "";
+  $("progress").classList.remove("hidden");
+  modelCalls = 0;
+
+  try {
+    const resp = await fetch("/api/investigate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ company: $("company").value, question: $("question").value }),
+    });
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = "";
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += decoder.decode(value, { stream: true });
+      const parts = buf.split("\n\n");
+      buf = parts.pop();
+      for (const part of parts) {
+        if (!part.startsWith("data: ")) continue;
+        const e = JSON.parse(part.slice(6));
+        if (e.type === "trace") {
+          if (e.action === "model_call") { modelCalls++; continue; }
+          const arrow = e.to ? ` → ${esc(e.to)}` : "";
+          log(`<span class="t">${esc(e.t)}</span><span class="who who-${esc(e.agent)}">${esc(e.agent)}</span>${arrow} <span class="detail">${describe(e)}</span>`,
+              e.action === "error" ? "err" : "");
+        }
+        else if (e.type === "result") render(e);
+        else if (e.type === "error") log(esc(e.message), "err");
+      }
+    }
+  } catch (err) {
+    log("Connection error: " + err.message, "err");
+  } finally {
+    $("go").disabled = false;
+  }
+});
+</script>
+</body>
+</html>
